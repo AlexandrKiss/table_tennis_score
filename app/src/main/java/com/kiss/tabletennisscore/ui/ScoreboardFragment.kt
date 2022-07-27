@@ -1,13 +1,16 @@
-package com.kiss.tabletennisscore
+package com.kiss.tabletennisscore.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.TextView
-import com.kiss.tabletennisscore.databinding.ActivityMainBinding
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.kiss.tabletennisscore.Player
+import com.kiss.tabletennisscore.StatusGame
+import com.kiss.tabletennisscore.databinding.FragmentScoreboardBinding
 
-class MainActivity : AppCompatActivity() {
-    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+class ScoreboardFragment: Fragment() {
+    private lateinit var binding: FragmentScoreboardBinding
 
     private val startText = "GO"
     private var double = 0
@@ -17,9 +20,12 @@ class MainActivity : AppCompatActivity() {
     private var gameStatus = StatusGame.SERVING
     private var serving: Player? = null
 
+    override fun onCreateView(i: LayoutInflater, c: ViewGroup?, s: Bundle?): View {
+        return FragmentScoreboardBinding.inflate(i, c, false).root
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
         playerOne = Player(id = 0, scoreboard = binding.scorePlayer1, ball = binding.ballPlayer1)
         playerTwo = Player(id = 1, scoreboard = binding.scorePlayer2, ball = binding.ballPlayer2)
 
