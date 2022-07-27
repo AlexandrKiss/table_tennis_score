@@ -6,6 +6,6 @@ data class Game (
     val firstPlayer: Player,
     val secondPlayer: Player,
     var serving: PlayerMarker? = null,
-    var winScore: Int,
+    var winScore: Int = 0,
     var winner: PlayerMarker? = null
 )
