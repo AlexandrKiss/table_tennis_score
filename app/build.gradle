@@ -1,18 +1,22 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-android-extensions'
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.kiss.tabletennisscore"
         minSdkVersion 24
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 32
+        versionCode 3
+        versionName "1.3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -50,4 +54,15 @@ dependencies {
     //Navigation Library
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // Hilt
+    implementation "androidx.hilt:hilt-navigation-fragment:1.0.0"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    // MVVM lib
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0'
+
+    //Logs Timber
+    implementation 'com.jakewharton.timber:timber:5.0.1'
 }

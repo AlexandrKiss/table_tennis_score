@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/scoreboardFragment"
-        android:name="com.kiss.tabletennisscore.ui.ScoreboardFragment"
+        android:name="com.kiss.tabletennisscore.ui.scoreboard.ScoreboardFragment"
         android:label="ScoreboardFragment" />
 </navigation>

@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Table tennis score</string>
+
+    <string name="player_one">Player 1</string>
+    <string name="player_two">Player 2</string>
+
+    <string name="scoreboard_go">Go</string>
+    <string name="scoreboard_up">up</string>
+    <string name="scoreboard_down">down</string>
+    <string name="scoreboard_reset">reset</string>
+
+    <string name="alert_dialog_title">Exit</string>
+    <string name="alert_dialog_message">You are sure? If you exit, all game progress will be lost. Exit?</string>
+    <string name="alert_dialog_button_yes">Yes</string>
+    <string name="alert_dialog_button_no">No</string>
 </resources>
