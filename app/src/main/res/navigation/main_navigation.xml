@@ -7,5 +7,17 @@
     <fragment
         android:id="@+id/scoreboardFragment"
         android:name="com.kiss.tabletennisscore.ui.scoreboard.ScoreboardFragment"
-        android:label="ScoreboardFragment" />
+        android:label="ScoreboardFragment" >
+        <action
+            android:id="@+id/action_scoreboardFragment_to_winnerDialogFragment"
+            app:destination="@id/winnerDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/winnerDialogFragment"
+        android:name="com.kiss.tabletennisscore.ui.scoreboard.WinnerDialogFragment"
+        android:label="WinnerDialogFragment" >
+        <argument
+            android:name="game"
+            app:argType="com.kiss.tabletennisscore.model.Game" />
+    </dialog>
 </navigation>

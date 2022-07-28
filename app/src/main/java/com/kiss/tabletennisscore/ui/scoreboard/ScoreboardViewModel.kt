@@ -3,16 +3,20 @@ package com.kiss.tabletennisscore.ui.scoreboard
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.kiss.tabletennisscore.common.GameStatus
 import com.kiss.tabletennisscore.common.PlayerMarker
 import com.kiss.tabletennisscore.common.ScoreEvent
+import com.kiss.tabletennisscore.data.repository.ResultRepository
 import com.kiss.tabletennisscore.model.Game
 import com.kiss.tabletennisscore.model.Player
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ScoreboardViewModel @Inject constructor(): ViewModel() {
+class ScoreboardViewModel @Inject constructor(private val repository: ResultRepository): ViewModel() {
 
     private var game: Game? = null
     private var double: Int = 0
@@ -60,6 +64,12 @@ class ScoreboardViewModel @Inject constructor(): ViewModel() {
                     _gameLiveData.postValue(GameStatus.Finish(this))
                 }
             }
+        }
+    }
+
+    fun saveResult(game: Game) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addResult(game)
         }
     }
 

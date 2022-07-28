@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -36,6 +35,7 @@ class ScoreboardFragment: Fragment() {
         initButtonListeners()
         initResetListener()
         initOnBackPressCallback()
+        initBackStackListener()
     }
 
     private fun initGame() {
@@ -72,14 +72,12 @@ class ScoreboardFragment: Fragment() {
                         changeControlVisibility(true)
                 }
                 is GameStatus.Finish -> {
-                    val winner = when(status.game.winner) {
-                        PlayerMarker.FIRST -> status.game.firstPlayer
-                        PlayerMarker.SECOND -> status.game.secondPlayer
-                        else -> null
-                    }
-                    binding.controls.invisible()
+                    changeControlVisibility(false)
                     changeControlEnabled(false)
-                    winner?.let { Toast.makeText(requireContext(), "${winner.name} win!", Toast.LENGTH_SHORT).show() }
+                    viewModel.saveResult(status.game)
+                    val action = ScoreboardFragmentDirections
+                        .actionScoreboardFragmentToWinnerDialogFragment(status.game)
+                    findNavController().navigate(action)
                 }
                 is GameStatus.Cancel -> {
                     findNavController().popBackStack()
@@ -112,15 +110,28 @@ class ScoreboardFragment: Fragment() {
         }
     }
 
-    private fun initResetListener() {
-        binding.resetScore.setOnClickListener {
-            with(binding) {
-                controls.invisible()
-                ballPlayer1.invisible()
-                ballPlayer2.invisible()
-            }
-            viewModel.initGame()
+    private fun initBackStackListener() {
+        val savedStateHandle = findNavController().currentBackStackEntry?.savedStateHandle
+        val newGameLiveData = savedStateHandle?.getLiveData<Nothing>(NEW_GAME)
+        val resultBoardLiveData = savedStateHandle?.getLiveData<Nothing>(RESULT_BOARD)
+
+        newGameLiveData?.observe(viewLifecycleOwner) { reset() }
+        resultBoardLiveData?.observe(viewLifecycleOwner) {
+            // TODO Open ResultBoardFragment
         }
+    }
+
+    private fun initResetListener() {
+        binding.resetScore.setOnClickListener { reset() }
+    }
+
+    private fun reset() {
+        with(binding) {
+            controls.invisible()
+            ballPlayer1.invisible()
+            ballPlayer2.invisible()
+        }
+        viewModel.initGame()
     }
 
     private fun setScoreByPlayer(players: Player, text: String? = null) {
@@ -172,5 +183,10 @@ class ScoreboardFragment: Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             backDialog.show()
         }
+    }
+
+    companion object {
+        const val NEW_GAME = "new_game"
+        const val RESULT_BOARD = "result_board"
     }
 }

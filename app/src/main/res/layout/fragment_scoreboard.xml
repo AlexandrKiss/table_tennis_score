@@ -30,8 +30,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/up_button_player_1"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="@dimen/button_size_250"
+        android:layout_height="@dimen/button_size_250"
         android:foreground="@drawable/background_ripple_blue"
         app:cardBackgroundColor="@color/electron_blue"
         app:cardElevation="10dp"
@@ -62,8 +62,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/up_button_player_2"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="@dimen/button_size_250"
+        android:layout_height="@dimen/button_size_250"
         android:foreground="@drawable/background_ripple_red"
         app:cardBackgroundColor="@color/chi_gong"
         app:cardElevation="10dp"
@@ -90,8 +90,7 @@
             android:textSize="100sp"
             android:textStyle="bold"
             android:textAllCaps="true"
-            tools:text="2
-"  />
+            tools:text="2"  />
     </androidx.cardview.widget.CardView>
 
     <TextView

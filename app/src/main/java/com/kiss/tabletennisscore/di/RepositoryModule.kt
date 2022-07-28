@@ -2,15 +2,18 @@ package com.kiss.tabletennisscore.di
 
 import com.kiss.tabletennisscore.data.repository.ResultRepository
 import com.kiss.tabletennisscore.data.repository.impl.ResultRepositoryImpl
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.FragmentComponent
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-@InstallIn(FragmentComponent::class)
+@InstallIn(SingletonComponent::class)
 @Module
-abstract class RepositoryModule {
+class RepositoryModule {
 
-    @Binds
-    abstract fun providesResultRepository(impl: ResultRepositoryImpl): ResultRepository
+    @Provides
+    @Singleton
+    fun providesResultRepository(resultRepositoryImpl: ResultRepositoryImpl): ResultRepository =
+        resultRepositoryImpl
 }

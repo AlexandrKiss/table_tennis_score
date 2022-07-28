@@ -8,6 +8,9 @@
     <string name="scoreboard_up">up</string>
     <string name="scoreboard_down">down</string>
     <string name="scoreboard_reset">reset</string>
+    <string name="scoreboard_new_game">new game</string>
+    <string name="result_board">result board</string>
+    <string name="scoreboard_win">win!</string>
 
     <string name="alert_dialog_title">Exit</string>
     <string name="alert_dialog_message">You are sure? If you exit, all game progress will be lost. Exit?</string>

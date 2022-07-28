@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dialog_corner_radius">24dp</dimen>
+    <dimen name="button_size_250">250dp</dimen>
+    <dimen name="button_size_500">500dp</dimen>
+</resources>
