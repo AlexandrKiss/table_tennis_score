@@ -37,7 +37,8 @@ class ResultRepositoryImpl @Inject constructor(private val dataBase: ResultDao):
             Game(
                 firstPlayer = Player.First(it.firstPlayerName, it.firstPlayerScore),
                 secondPlayer = Player.Second(it.secondPlayerName, it.secondPlayerScore),
-                winner = winner
+                winner = winner,
+                date = it.date
             )
         }
     }

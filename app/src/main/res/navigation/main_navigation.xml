@@ -11,13 +11,24 @@
         <action
             android:id="@+id/action_scoreboardFragment_to_winnerDialogFragment"
             app:destination="@id/winnerDialogFragment" />
+        <action
+            android:id="@+id/action_scoreboardFragment_to_resultBoardFragment"
+            app:destination="@id/resultBoardFragment" />
     </fragment>
     <dialog
         android:id="@+id/winnerDialogFragment"
-        android:name="com.kiss.tabletennisscore.ui.scoreboard.WinnerDialogFragment"
-        android:label="WinnerDialogFragment" >
+        android:name="com.kiss.tabletennisscore.ui.winner.WinnerDialogFragment"
+        android:label="WinnerDialogFragment">
         <argument
             android:name="game"
             app:argType="com.kiss.tabletennisscore.model.Game" />
+        <action
+            android:id="@+id/action_winnerDialogFragment_to_resultBoardFragment"
+            app:destination="@id/resultBoardFragment"
+            app:popUpToInclusive="true"/>
     </dialog>
+    <dialog
+        android:id="@+id/resultBoardFragment"
+        android:name="com.kiss.tabletennisscore.ui.resultboard.ResultBoardFragment"
+        android:label="ResultBoardFragment" />
 </navigation>

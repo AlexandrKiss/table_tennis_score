@@ -116,9 +116,7 @@ class ScoreboardFragment: Fragment() {
         val resultBoardLiveData = savedStateHandle?.getLiveData<Nothing>(RESULT_BOARD)
 
         newGameLiveData?.observe(viewLifecycleOwner) { reset() }
-        resultBoardLiveData?.observe(viewLifecycleOwner) {
-            // TODO Open ResultBoardFragment
-        }
+        resultBoardLiveData?.observe(viewLifecycleOwner) { reset() }
     }
 
     private fun initResetListener() {
@@ -178,7 +176,6 @@ class ScoreboardFragment: Fragment() {
                 dialog.cancel()
             }.create()
 
-    //Init onBackPressCallback with AlertDialog
     private fun initOnBackPressCallback() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             backDialog.show()
