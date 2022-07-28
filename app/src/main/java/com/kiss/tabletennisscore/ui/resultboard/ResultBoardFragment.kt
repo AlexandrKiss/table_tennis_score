@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.kiss.tabletennisscore.common.Result
 import com.kiss.tabletennisscore.databinding.FragmentResultBoardBinding
 import com.kiss.tabletennisscore.ui.BaseDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ResultBoardFragment: BaseDialogFragment() {
@@ -31,8 +34,18 @@ class ResultBoardFragment: BaseDialogFragment() {
     }
 
     private fun initObservers() {
-        viewModel.gameListLiveData.observe(viewLifecycleOwner) {
-            adapter.setList(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.gameListFlow.collect { result ->
+                when(result) {
+                    is Result.Loading -> {} // TODO add ProgressBar in view
+                    is Result.Success -> adapter.setList(result.data)
+                    is Result.Empty -> {} // TODO add an empty list handler
+                    is Result.Error -> {} // TODO add an error handler
+                }
+            }
         }
+//        viewModel.gameListFlow.observe(viewLifecycleOwner) {
+//            adapter.setList(it)
+//        }
     }
 }
