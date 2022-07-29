@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.kiss.tabletennisscore.common.Result
 import com.kiss.tabletennisscore.databinding.FragmentResultBoardBinding
 import com.kiss.tabletennisscore.ui.BaseDialogFragment
+import com.kiss.tabletennisscore.ui.scoreboard.ScoreboardFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -30,7 +31,10 @@ class ResultBoardDialogFragment: BaseDialogFragment() {
         binding.resultBoard.adapter = adapter
         initObservers()
         viewModel.getGameList()
-        interceptionPressingBack { findNavController().popBackStack() }
+        interceptionPressingBack {
+            findNavController().previousBackStackEntry?.savedStateHandle?.set(ScoreboardFragment.NEW_GAME, null)
+            findNavController().popBackStack()
+        }
     }
 
     private fun initObservers() {

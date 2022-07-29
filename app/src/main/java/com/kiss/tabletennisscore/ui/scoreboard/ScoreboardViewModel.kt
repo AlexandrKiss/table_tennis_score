@@ -34,6 +34,7 @@ class ScoreboardViewModel @Inject constructor(private val repository: ResultRepo
             winScore = 11
         )
         _gameLiveData.postValue(GameStatus.Init(game!!))
+        double = 0
     }
 
     fun setPlayersName(fName: String? = null, sName: String? = null) {

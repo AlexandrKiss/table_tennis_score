@@ -93,31 +93,74 @@
             tools:text="2"  />
     </androidx.cardview.widget.CardView>
 
+    <EditText
+        android:id="@+id/name_player_1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="start"
+        android:paddingVertical="14dp"
+        android:paddingEnd="14dp"
+        android:hint="@string/player_one"
+        android:textColorHint="@color/white_40"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxLength="12"
+        android:inputType="text"
+        android:imeOptions="flagNoExtractUi|flagNoPersonalizedLearning"
+        app:layout_constraintBottom_toTopOf="@+id/up_button_player_1"
+        app:layout_constraintEnd_toEndOf="@+id/up_button_player_1"
+        app:layout_constraintStart_toStartOf="@+id/up_button_player_1" />
+
+    <EditText
+        android:id="@+id/name_player_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:ellipsize="start"
+        android:gravity="end"
+        android:lines="1"
+        android:paddingVertical="14dp"
+        android:paddingStart="14dp"
+        android:hint="@string/player_two"
+        android:textColorHint="@color/white_40"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:maxLength="12"
+        android:inputType="textPersonName"
+        android:imeOptions="flagNoExtractUi|flagNoPersonalizedLearning"
+        app:layout_constraintBottom_toTopOf="@+id/up_button_player_2"
+        app:layout_constraintStart_toStartOf="@+id/up_button_player_2"
+        app:layout_constraintEnd_toEndOf="@+id/up_button_player_2" />
+
     <TextView
         android:id="@+id/spare_up_button_player_1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="15dp"
         android:background="@drawable/text_background"
         android:foreground="@drawable/text_foreground"
+        android:gravity="center"
         android:paddingHorizontal="15dp"
         android:paddingVertical="4dp"
-        android:gravity="center"
         android:text="@string/scoreboard_up"
+        android:textAllCaps="true"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:textAllCaps="true"
-        app:layout_constraintBottom_toTopOf="@+id/up_button_player_1"
-        app:layout_constraintStart_toStartOf="@+id/down_button_player_1"
-        app:layout_constraintEnd_toEndOf="@+id/down_button_player_1"/>
+        app:layout_constraintStart_toStartOf="@+id/up_button_player_1"
+        app:layout_constraintTop_toTopOf="@+id/reset_score"
+        app:layout_constraintBottom_toBottomOf="@+id/reset_score" />
 
     <TextView
         android:id="@+id/down_button_player_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
         android:background="@drawable/text_background"
         android:foreground="@drawable/text_foreground"
         android:paddingHorizontal="15dp"
@@ -126,15 +169,15 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textAllCaps="true"
-        app:layout_constraintStart_toStartOf="@+id/up_button_player_1"
-        app:layout_constraintTop_toBottomOf="@+id/up_button_player_1" />
+        app:layout_constraintStart_toEndOf="@+id/spare_up_button_player_1"
+        app:layout_constraintTop_toTopOf="@+id/spare_up_button_player_1"
+        app:layout_constraintBottom_toBottomOf="@+id/spare_up_button_player_1" />
 
     <TextView
         android:id="@+id/spare_up_button_player_2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_marginBottom="15dp"
         android:background="@drawable/text_background"
         android:foreground="@drawable/text_foreground"
         android:paddingHorizontal="15dp"
@@ -144,16 +187,16 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textAllCaps="true"
-        app:layout_constraintBottom_toTopOf="@+id/up_button_player_2"
-        app:layout_constraintStart_toStartOf="@+id/down_button_player_2"
-        app:layout_constraintEnd_toEndOf="@+id/down_button_player_2" />
+        app:layout_constraintEnd_toEndOf="@+id/up_button_player_2"
+        app:layout_constraintTop_toTopOf="@+id/reset_score"
+        app:layout_constraintBottom_toBottomOf="@+id/reset_score"/>
 
     <TextView
         android:id="@+id/down_button_player_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
         android:background="@drawable/text_background"
         android:foreground="@drawable/text_foreground"
         android:paddingHorizontal="15dp"
@@ -162,8 +205,9 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textAllCaps="true"
-        app:layout_constraintEnd_toEndOf="@+id/up_button_player_2"
-        app:layout_constraintTop_toBottomOf="@+id/up_button_player_2" />
+        app:layout_constraintEnd_toStartOf="@+id/spare_up_button_player_2"
+        app:layout_constraintTop_toTopOf="@+id/spare_up_button_player_2"
+        app:layout_constraintBottom_toBottomOf="@+id/spare_up_button_player_2" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/reset_score"
