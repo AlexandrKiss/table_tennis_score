@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.activity.addCallback
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -97,7 +98,7 @@ class ScoreboardFragment: Fragment() {
                     findNavController().navigate(action)
                 }
                 is GameStatus.Cancel -> {
-                    findNavController().popBackStack()
+                    requireActivity().finish()
                 }
             }
         }
@@ -297,16 +298,24 @@ class ScoreboardFragment: Fragment() {
         }
     }
 
-    //fixme
-    private fun createAlertDialog(): AlertDialog =
-        AlertDialog.Builder(requireContext())
+    private fun createAlertDialog(): AlertDialog {
+        val dialog = AlertDialog.Builder(requireContext())
             .setTitle(getString(R.string.alert_dialog_title))
             .setMessage(getString(R.string.alert_dialog_message))
             .setPositiveButton(getString(R.string.alert_dialog_button_yes)) { _, _ ->
                 viewModel.cancel()
             }.setNegativeButton(getString(R.string.alert_dialog_button_no)) { dialog, _ ->
-                dialog.cancel()
+                dialog.dismiss()
             }.create()
+
+        dialog.setOnShowListener {
+            val blue = ResourcesCompat.getColor(resources, R.color.electron_blue, null)
+            val red = ResourcesCompat.getColor(resources, R.color.chi_gong, null)
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(red)
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(blue)
+        }
+        return dialog
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun View.hideKeyBoardListener() {
