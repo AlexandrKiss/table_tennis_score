@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kiss.tabletennisscore.common.GameStatus
+import com.kiss.tabletennisscore.common.GameTime
 import com.kiss.tabletennisscore.common.PlayerMarker
+import com.kiss.tabletennisscore.common.PlayerMarker.*
 import com.kiss.tabletennisscore.common.ScoreEvent
 import com.kiss.tabletennisscore.data.repository.ResultRepository
 import com.kiss.tabletennisscore.model.Game
@@ -44,26 +46,29 @@ class ScoreboardViewModel @Inject constructor(private val repository: ResultRepo
     fun changePlayerScore(playerMarker: PlayerMarker, event: ScoreEvent, isServing: Boolean = true) {
         game?.apply {
             val player: Player = when(playerMarker) {
-                PlayerMarker.FIRST -> firstPlayer.apply {
-                        score = changeScore(event, score)
-                    }
-                PlayerMarker.SECOND -> secondPlayer.apply {
-                        score = changeScore(event, score)
-                    }
+                FIRST -> firstPlayer.apply { score = changeScore(event, score) }
+                SECOND -> secondPlayer.apply { score = changeScore(event, score) }
             }
 
-            when(player.score) {
-                in 0 until winScore -> {
-                    if (isServing) {
-                        serving = getServing(playerMarker)
-                    }
-                    _gameLiveData.postValue(GameStatus.Resume(this))
-                }
-                winScore -> {
-                    winner = playerMarker
-                    _gameLiveData.postValue(GameStatus.Finish(this))
-                }
+            val anotherPlayerScore = when(player) {
+                is Player.First -> secondPlayer.score
+                is Player.Second -> firstPlayer.score
             }
+            gameTime = getGameTime(player.score, anotherPlayerScore, winScore)
+
+            if (isServing)
+                serving = getServing(playerMarker, gameTime.serving)
+
+            val isRegularTimeWinner =
+                gameTime == GameTime.REGULAR_TIME && player.score == winScore
+            val isOvertimeTimeWinner =
+                gameTime == GameTime.OVERTIME && (player.score - anotherPlayerScore) == 2
+
+            if (isRegularTimeWinner || isOvertimeTimeWinner) {
+                winner = playerMarker
+                _gameLiveData.postValue(GameStatus.Finish(this))
+            } else
+                _gameLiveData.postValue(GameStatus.Resume(this))
         }
     }
 
@@ -73,18 +78,8 @@ class ScoreboardViewModel @Inject constructor(private val repository: ResultRepo
         }
     }
 
-    private fun getServing(serving: PlayerMarker): PlayerMarker {
-        val currentServing = game?.serving ?: serving
-        return if (double == 1) {
-            double = 0
-            when(currentServing) {
-                PlayerMarker.FIRST -> PlayerMarker.SECOND
-                PlayerMarker.SECOND -> PlayerMarker.FIRST
-            }
-        } else {
-            double++
-            currentServing
-        }
+    fun cancel() {
+        _gameLiveData.postValue(GameStatus.Cancel)
     }
 
     private fun changeScore(event: ScoreEvent, score: Int): Int =
@@ -93,7 +88,22 @@ class ScoreboardViewModel @Inject constructor(private val repository: ResultRepo
             ScoreEvent.DOWN -> score - 1
         }
 
-    fun cancel() {
-        _gameLiveData.postValue(GameStatus.Cancel)
+    private fun getGameTime(firstScore: Int, secondScore: Int, winScore: Int): GameTime {
+        return if (firstScore >= (winScore - 1) && secondScore >= (winScore - 1)) GameTime.OVERTIME
+        else GameTime.REGULAR_TIME
+    }
+
+    private fun getServing(serving: PlayerMarker, ratio: Int): PlayerMarker {
+        val currentServing = game?.serving ?: serving
+        return if (double >= ratio) {
+            double = 0
+            when(currentServing) {
+                FIRST -> SECOND
+                SECOND -> FIRST
+            }
+        } else {
+            double++
+            currentServing
+        }
     }
 }
