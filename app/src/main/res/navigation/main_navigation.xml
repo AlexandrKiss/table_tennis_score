@@ -29,6 +29,6 @@
     </dialog>
     <dialog
         android:id="@+id/resultBoardFragment"
-        android:name="com.kiss.tabletennisscore.ui.resultboard.ResultBoardFragment"
+        android:name="com.kiss.tabletennisscore.ui.resultboard.ResultBoardDialogFragment"
         android:label="ResultBoardFragment" />
 </navigation>

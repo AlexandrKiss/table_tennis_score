@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ResultBoardFragment: BaseDialogFragment() {
+class ResultBoardDialogFragment: BaseDialogFragment() {
     private lateinit var binding: FragmentResultBoardBinding
     private val viewModel: ResultBoardViewModel by viewModels()
     private val adapter = ResultBoardAdapter()
@@ -44,8 +44,5 @@ class ResultBoardFragment: BaseDialogFragment() {
                 }
             }
         }
-//        viewModel.gameListFlow.observe(viewLifecycleOwner) {
-//            adapter.setList(it)
-//        }
     }
 }
