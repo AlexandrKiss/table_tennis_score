@@ -1,221 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity"
-    android:background="@drawable/bg_table_nine">
+    tools:context=".ui.MainActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/center_line"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/controls"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:constraint_referenced_ids="spare_up_button_player_1, spare_up_button_player_2, down_button_player_1, down_button_player_2" />
+        android:background="@drawable/bg_table_nine">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/up_button_player_1"
-        android:layout_width="@dimen/button_size_250"
-        android:layout_height="@dimen/button_size_250"
-        android:foreground="@drawable/background_ripple_blue"
-        app:cardBackgroundColor="@color/electron_blue"
-        app:cardElevation="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/center_line"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/ball_player_1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="15dp"
-            android:src="@drawable/ball_4"
-            android:visibility="invisible"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/score_player_1"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/center_line"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="100sp"
-            android:textStyle="bold"
-            tools:text="0" />
-    </androidx.cardview.widget.CardView>
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/up_button_player_2"
-        android:layout_width="@dimen/button_size_250"
-        android:layout_height="@dimen/button_size_250"
-        android:foreground="@drawable/background_ripple_red"
-        app:cardBackgroundColor="@color/chi_gong"
-        app:cardElevation="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/center_line"
-        app:layout_constraintTop_toTopOf="parent">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/up_button_player_1"
+            android:layout_width="@dimen/button_size_250"
+            android:layout_height="@dimen/button_size_250"
+            android:foreground="@drawable/background_ripple_blue"
+            app:cardBackgroundColor="@color/electron_blue"
+            app:cardElevation="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/center_line"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/ball_player_2"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="end"
-            android:layout_margin="15dp"
-            android:src="@drawable/ball_4"
-            android:visibility="invisible"
-            tools:visibility="visible" />
+            <ImageView
+                android:id="@+id/ball_player_1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="15dp"
+                android:src="@drawable/ball_4"
+                android:visibility="invisible"
+                tools:visibility="visible" />
 
-        <TextView
-            android:id="@+id/score_player_2"
+            <TextView
+                android:id="@+id/score_player_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="100sp"
+                android:textStyle="bold"
+                tools:text="0" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/up_button_player_2"
+            android:layout_width="@dimen/button_size_250"
+            android:layout_height="@dimen/button_size_250"
+            android:foreground="@drawable/background_ripple_red"
+            app:cardBackgroundColor="@color/chi_gong"
+            app:cardElevation="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/center_line"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ball_player_2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:layout_margin="15dp"
+                android:src="@drawable/ball_4"
+                android:visibility="invisible"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/score_player_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="100sp"
+                android:textStyle="bold"
+                tools:text="2" />
+        </androidx.cardview.widget.CardView>
+
+        <EditText
+            style="@style/EditName"
+            android:id="@+id/name_player_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:hint="@string/player_one"
+            android:paddingEnd="14dp"
+            app:layout_constraintBottom_toTopOf="@+id/up_button_player_1"
+            app:layout_constraintEnd_toEndOf="@+id/up_button_player_1"
+            app:layout_constraintStart_toStartOf="@+id/up_button_player_1" />
+
+        <EditText
+            style="@style/EditName"
+            android:id="@+id/name_player_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:ellipsize="start"
+            android:gravity="end"
+            android:hint="@string/player_two"
+            android:paddingStart="14dp"
+            app:layout_constraintBottom_toTopOf="@+id/up_button_player_2"
+            app:layout_constraintEnd_toEndOf="@+id/up_button_player_2"
+            app:layout_constraintStart_toStartOf="@+id/up_button_player_2" />
+
+        <include
+            layout="@layout/include_score"
+            android:id="@+id/player_edit_score_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_marginEnd="12dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/up_button_player_1"
+            app:layout_constraintEnd_toStartOf="@+id/up_button_player_1"
+            tools:visibility="visible"/>
+
+        <include
+            android:id="@+id/player_edit_score_two"
+            layout="@layout/include_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/up_button_player_2"
+            app:layout_constraintStart_toEndOf="@+id/up_button_player_2"
+            tools:visibility="visible"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/reset_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/text_background"
+            android:foreground="@drawable/text_foreground"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="4dp"
+            android:text="@string/scoreboard_reset"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="100sp"
+            android:textSize="25sp"
             android:textStyle="bold"
-            tools:text="2" />
-    </androidx.cardview.widget.CardView>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/up_button_player_1" />
 
-    <EditText
-        android:id="@+id/name_player_1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:ellipsize="end"
-        android:gravity="start"
-        android:hint="@string/player_one"
-        android:imeOptions="flagNoExtractUi|flagNoPersonalizedLearning"
-        android:inputType="text"
-        android:lines="1"
-        android:maxLength="12"
-        android:paddingVertical="14dp"
-        android:paddingEnd="14dp"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white_40"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/up_button_player_1"
-        app:layout_constraintEnd_toEndOf="@+id/up_button_player_1"
-        app:layout_constraintStart_toStartOf="@+id/up_button_player_1" />
-
-    <EditText
-        android:id="@+id/name_player_2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:ellipsize="start"
-        android:gravity="end"
-        android:hint="@string/player_two"
-        android:imeOptions="flagNoExtractUi|flagNoPersonalizedLearning"
-        android:inputType="textPersonName"
-        android:lines="1"
-        android:maxLength="12"
-        android:paddingVertical="14dp"
-        android:paddingStart="14dp"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white_40"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/up_button_player_2"
-        app:layout_constraintEnd_toEndOf="@+id/up_button_player_2"
-        app:layout_constraintStart_toStartOf="@+id/up_button_player_2" />
-
-    <TextView
-        android:id="@+id/spare_up_button_player_1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@drawable/text_background"
-        android:foreground="@drawable/text_foreground"
-        android:gravity="center"
-        android:paddingHorizontal="15dp"
-        android:paddingVertical="4dp"
-        android:text="@string/scoreboard_up"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/reset_score"
-        app:layout_constraintStart_toStartOf="@+id/up_button_player_1"
-        app:layout_constraintTop_toTopOf="@+id/reset_score" />
-
-    <TextView
-        android:id="@+id/down_button_player_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginStart="15dp"
-        android:background="@drawable/text_background"
-        android:foreground="@drawable/text_foreground"
-        android:paddingHorizontal="15dp"
-        android:paddingVertical="4dp"
-        android:text="@string/scoreboard_down"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/spare_up_button_player_1"
-        app:layout_constraintStart_toEndOf="@+id/spare_up_button_player_1"
-        app:layout_constraintTop_toTopOf="@+id/spare_up_button_player_1" />
-
-    <TextView
-        android:id="@+id/spare_up_button_player_2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:background="@drawable/text_background"
-        android:foreground="@drawable/text_foreground"
-        android:gravity="center"
-        android:paddingHorizontal="15dp"
-        android:paddingVertical="4dp"
-        android:text="@string/scoreboard_up"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/reset_score"
-        app:layout_constraintEnd_toEndOf="@+id/up_button_player_2"
-        app:layout_constraintTop_toTopOf="@+id/reset_score" />
-
-    <TextView
-        android:id="@+id/down_button_player_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/text_background"
-        android:foreground="@drawable/text_foreground"
-        android:paddingHorizontal="15dp"
-        android:paddingVertical="4dp"
-        android:text="@string/scoreboard_down"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/spare_up_button_player_2"
-        app:layout_constraintEnd_toStartOf="@+id/spare_up_button_player_2"
-        app:layout_constraintTop_toTopOf="@+id/spare_up_button_player_2" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/reset_score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/text_background"
-        android:foreground="@drawable/text_foreground"
-        android:paddingHorizontal="15dp"
-        android:paddingVertical="4dp"
-        android:text="@string/scoreboard_reset"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/up_button_player_1" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_open_result_board"
+            style="@style/Fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:src="@drawable/ic_baseline_table_rows"
+            android:layout_margin="16dp"
+            app:backgroundTint="@color/electron_blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

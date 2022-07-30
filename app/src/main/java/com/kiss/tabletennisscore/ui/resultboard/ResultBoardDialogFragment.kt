@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.kiss.tabletennisscore.R
 import com.kiss.tabletennisscore.common.Result
 import com.kiss.tabletennisscore.databinding.FragmentResultBoardBinding
 import com.kiss.tabletennisscore.ui.BaseDialogFragment
 import com.kiss.tabletennisscore.ui.scoreboard.ScoreboardFragment
+import com.kiss.tabletennisscore.ui.scoreboard.ScoreboardFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -32,7 +34,15 @@ class ResultBoardDialogFragment: BaseDialogFragment() {
         initObservers()
         viewModel.getGameList()
         interceptionPressingBack {
-            findNavController().previousBackStackEntry?.savedStateHandle?.set(ScoreboardFragment.NEW_GAME, null)
+            findNavController().previousBackStackEntry?.let {
+                val previousBackStackId = it.destination.id
+                val savedStateHandle = it.savedStateHandle
+                savedStateHandle[ScoreboardFragment.NEW_GAME] =
+                    previousBackStackId != R.id.scoreboardFragment
+            }
+//            val previousBackStackId = findNavController().previousBackStackEntry?.destination?.id
+//            val savedStateHandle = findNavController().previousBackStackEntry?.savedStateHandle
+//            savedStateHandle?.set(ScoreboardFragment.NEW_GAME, previousBackStackId != R.id.scoreboardFragment)
             findNavController().popBackStack()
         }
     }

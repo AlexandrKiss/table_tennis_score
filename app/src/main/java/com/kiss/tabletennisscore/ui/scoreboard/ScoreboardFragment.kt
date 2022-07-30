@@ -15,17 +15,24 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.activity.addCallback
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionManager
+import com.google.android.material.transition.MaterialArcMotion
+import com.google.android.material.transition.MaterialContainerTransform
 import com.kiss.tabletennisscore.R
 import com.kiss.tabletennisscore.common.*
 import com.kiss.tabletennisscore.databinding.FragmentScoreboardBinding
+import com.kiss.tabletennisscore.databinding.IncludeScoreBinding
 import com.kiss.tabletennisscore.model.Player
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_scoreboard.view.*
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
 @AndroidEntryPoint
@@ -57,7 +64,24 @@ class ScoreboardFragment: Fragment() {
         initEditNameView()
         initOnBackPressCallback()
         initBackStackListener()
+
         view.hideKeyBoardListener()
+
+        with(binding.playerEditScoreOne) {
+            initScoreFabListeners()
+            setColor(PlayerMarker.FIRST)
+        }
+        with(binding.playerEditScoreTwo) {
+            initScoreFabListeners()
+            setColor(PlayerMarker.SECOND)
+        }
+
+        binding.fabOpenResultBoard.setOnClickListener {
+            val action =
+                ScoreboardFragmentDirections.actionScoreboardFragmentToResultBoardFragment()
+            findNavController().navigate(action)
+            it.invisible()
+        }
     }
 
     private fun initGame() {
@@ -86,7 +110,7 @@ class ScoreboardFragment: Fragment() {
                         setScoreByPlayer(secondPlayer)
                         serving?.let { changeBallVisibility(it) }
                     }
-                    if (!binding.controls.isVisible)
+                    if (!binding.resetScore.isVisible)
                         changeControlVisibility(true)
                 }
                 is GameStatus.Finish -> {
@@ -96,6 +120,7 @@ class ScoreboardFragment: Fragment() {
                     val action = ScoreboardFragmentDirections
                         .actionScoreboardFragmentToWinnerDialogFragment(status.game)
                     findNavController().navigate(action)
+                    binding.fabOpenResultBoard.invisible()
                 }
                 is GameStatus.Cancel -> {
                     requireActivity().finish()
@@ -109,10 +134,10 @@ class ScoreboardFragment: Fragment() {
         binding.upButtonPlayer1.setOnClickListener {
             viewModel.changePlayerScore(PlayerMarker.FIRST, ScoreEvent.UP)
         }
-        binding.spareUpButtonPlayer1.setOnClickListener {
+        binding.playerEditScoreOne.upButton.setOnClickListener {
             viewModel.changePlayerScore(PlayerMarker.FIRST, ScoreEvent.UP, false)
         }
-        binding.downButtonPlayer1.setOnClickListener {
+        binding.playerEditScoreOne.downButton.setOnClickListener {
             viewModel.changePlayerScore(PlayerMarker.FIRST, ScoreEvent.DOWN, false)
         }
 
@@ -120,10 +145,10 @@ class ScoreboardFragment: Fragment() {
         binding.upButtonPlayer2.setOnClickListener {
             viewModel.changePlayerScore(PlayerMarker.SECOND, ScoreEvent.UP)
         }
-        binding.spareUpButtonPlayer2.setOnClickListener {
+        binding.playerEditScoreTwo.upButton.setOnClickListener {
             viewModel.changePlayerScore(PlayerMarker.SECOND, ScoreEvent.UP, false)
         }
-        binding.downButtonPlayer2.setOnClickListener {
+        binding.playerEditScoreTwo.downButton.setOnClickListener {
             viewModel.changePlayerScore(PlayerMarker.SECOND, ScoreEvent.DOWN, false)
         }
     }
@@ -231,7 +256,8 @@ class ScoreboardFragment: Fragment() {
 
     private fun reset() {
         with(binding) {
-            controls.invisible()
+            binding.playerEditScoreOne.root.invisible()
+            binding.playerEditScoreTwo.root.invisible()
             ballPlayer1.invisible()
             ballPlayer2.invisible()
         }
@@ -260,7 +286,8 @@ class ScoreboardFragment: Fragment() {
 
     private fun changeControlVisibility(visible: Boolean?) {
         with(binding) {
-            controls.changeVisibility(visible)
+            binding.playerEditScoreOne.root.changeVisibility(visible)
+            binding.playerEditScoreTwo.root.changeVisibility(visible)
             resetScore.changeVisibility(visible)
         }
     }
@@ -274,15 +301,16 @@ class ScoreboardFragment: Fragment() {
 
     private fun initBackStackListener() {
         val savedStateHandle = findNavController().currentBackStackEntry?.savedStateHandle
-        val newGameLiveData = savedStateHandle?.getLiveData<Nothing>(NEW_GAME)
+        val newGameLiveData = savedStateHandle?.getLiveData<Boolean>(NEW_GAME)
         val resultBoardLiveData = savedStateHandle?.getLiveData<Nothing>(RESULT_BOARD)
 
-        newGameLiveData?.observe(viewLifecycleOwner) {
+        newGameLiveData?.observe(viewLifecycleOwner) { isReset ->
             with(binding) {
                 namePlayer1.visible()
                 namePlayer2.visible()
+                fabOpenResultBoard.visible()
             }
-            reset()
+            if (isReset) reset()
         }
         resultBoardLiveData?.observe(viewLifecycleOwner) {
             with(binding) {
@@ -330,6 +358,51 @@ class ScoreboardFragment: Fragment() {
             }
             return@setOnTouchListener false
         }
+    }
+
+    private fun IncludeScoreBinding.initScoreFabListeners() {
+        fabOpenMenu.setOnClickListener {
+            val transform = MaterialContainerTransform()
+            with(transform) {
+                startView = it
+                endView = fabContainer
+                addTarget(fabContainer)
+
+                interpolator = FastOutSlowInInterpolator()
+                scrimColor = Color.TRANSPARENT
+                TransitionManager.beginDelayedTransition(binding.root, this)
+            }
+            fabContainer.visible()
+            it.gone()
+        }
+
+        fabCloseMenu.setOnClickListener {
+            val transform = MaterialContainerTransform()
+            with(transform) {
+                startView = fabContainer
+                endView = fabOpenMenu
+                addTarget(fabOpenMenu)
+
+                interpolator = FastOutSlowInInterpolator()
+                scrimColor = Color.TRANSPARENT
+                TransitionManager.beginDelayedTransition(binding.root, this)
+            }
+            fabContainer.gone()
+            fabOpenMenu.visible()
+        }
+    }
+
+    private fun IncludeScoreBinding.setColor(playerMarker: PlayerMarker) {
+        val color = when(playerMarker) {
+            PlayerMarker.FIRST ->
+                ContextCompat.getColorStateList(requireContext(), R.color.electron_blue)
+            PlayerMarker.SECOND ->
+                ContextCompat.getColorStateList(requireContext(), R.color.chi_gong)
+        }
+        fabOpenMenu.backgroundTintList = color
+        fabCloseMenu.backgroundTintList = color
+        upButton.backgroundTintList = color
+        downButton.backgroundTintList = color
     }
 
     companion object {

@@ -56,7 +56,7 @@ class WinnerDialogFragment: BaseDialogFragment() {
     }
 
     private fun newGameCallback() {
-        findNavController().previousBackStackEntry?.savedStateHandle?.set(NEW_GAME, null)
+        findNavController().previousBackStackEntry?.savedStateHandle?.set(NEW_GAME, true)
         dismiss()
     }
 

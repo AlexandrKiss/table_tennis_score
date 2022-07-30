@@ -8,8 +8,27 @@
     </item>
 
     <item android:id="@android:id/background">
-        <shape android:shape="rectangle">
-            <solid android:color="@android:color/transparent" />
-        </shape>
+        <layer-list>
+            <item android:width="4dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/white"/>
+                </shape>
+            </item>
+            <item android:height="4dp" android:gravity="top">
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/white"/>
+                </shape>
+            </item>
+            <item android:width="3dp" android:gravity="end">
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/white"/>
+                </shape>
+            </item>
+            <item android:height="4dp" android:gravity="bottom">
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/white"/>
+                </shape>
+            </item>
+        </layer-list>
     </item>
 </ripple>

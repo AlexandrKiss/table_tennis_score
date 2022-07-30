@@ -86,7 +86,9 @@ class ScoreboardViewModel @Inject constructor(private val repository: ResultRepo
     private fun changeScore(event: ScoreEvent, score: Int): Int =
         when (event) {
             ScoreEvent.UP -> score + 1
-            ScoreEvent.DOWN -> score - 1
+            ScoreEvent.DOWN ->
+                if (score != 0) score - 1
+                else score
         }
 
     private fun getGameTime(firstScore: Int, secondScore: Int, winScore: Int): GameTime {
