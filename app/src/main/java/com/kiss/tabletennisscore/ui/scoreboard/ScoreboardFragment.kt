@@ -178,7 +178,7 @@ class ScoreboardFragment: Fragment() {
         setOnFocusChangeListener { _, isFocusable ->
             if (isFocusable) {
                 backgroundTintList = whiteColor
-                setRemoveIcon(removeIcon, position)
+                if ((text?.length ?: 0) > 0) setRemoveIcon(removeIcon, position)
             } else {
                 backgroundTintList = transparentColor
                 callback.invoke(text.toString())
